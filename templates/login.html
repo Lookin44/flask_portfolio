@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="border border-warning shadow rounded-3 m-4 p-4">
+      <form method="post" action="">
+          {{form.hidden_tag()}}
+          <fieldset class="form-group">
+            <legend class="mb-4">Войти</legend>
+              <div class="form-floating mb-3">
+                  {{ form.user_email(class="form-control", placeholder="Почта") }}
+                  {{ form.user_email.label() }}
+              </div>
+              <div class="form-floating mb-3">
+                  {{ form.password(class="form-control", placeholder="Пароль") }}
+                  {{ form.password.label() }}
+              </div>
+              <div class="form-check form-switch mb-3">
+                  {{ form.remember(class="form-check-input") }}
+                  {{ form.remember.label() }}
+              </div>
+              <div class="form-floating mb-3">
+                  {{ form.submit(class="btn btn-warning") }}
+              </div>
+          </fieldset>
+      </form>
+    </div>
+{% endblock content %}

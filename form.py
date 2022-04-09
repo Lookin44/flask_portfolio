@@ -12,46 +12,42 @@ class RegistrationForm(FlaskForm):
     name = StringField(
         'Имя',
         validators=[
-            DataRequired(),
+            DataRequired(message='Поле не может быть пустым'),
             Length(
-                min=2,
+                min=4,
                 max=20,
-                message='Введите не меньше 2 и не больше 20 букв.'
-            )
+                message='Поле должно содержать от 2-ух до 20-ти символов'
+            ),
         ]
     )
     last_name = StringField(
         'Фамилия',
         validators=[
-            DataRequired(),
-            Length(
-                min=2,
-                max=20,
-                message='Введите не меньше 2 и не больше 20 букв.'
-            )
+            DataRequired(message='Поле не может быть пустым'),
+            Length(min=2, max=20),
         ]
     )
     user_email = StringField(
         'Электронная почта',
         validators=[
-            DataRequired(),
-            Email(message='Вы должны ввести адрес электронной почты.')
+            DataRequired(message='Поле не может быть пустым'),
+            Email(message='Некорректный адрес электронной почты')
         ]
     )
     password = PasswordField(
         'Пароль',
         validators=[
-            DataRequired(message='Это обязательное поле.')
+            DataRequired(message='Поле не может быть пустым'),
         ]
     )
     pass_password = PasswordField(
-        'Подтвердите пароль',
+        'Повторите пароль',
         validators=[
-            DataRequired(),
-            EqualTo('password', message='Пароли не сходятся.')
+            DataRequired(message='Поле не может быть пустым'),
+            EqualTo('password', message='Пароли не сходятся')
         ]
     )
-    submit = SubmitField('Мои данные верны')
+    submit = SubmitField('Регистрация')
 
 
 class LoginForm(FlaskForm):
@@ -59,7 +55,7 @@ class LoginForm(FlaskForm):
         'Электронная почта',
         validators=[
             DataRequired(),
-            Email(message='Вы должны ввести адрес электронной почты.')
+            Email()
         ]
     )
     password = PasswordField(
@@ -68,5 +64,10 @@ class LoginForm(FlaskForm):
             DataRequired()
         ]
     )
-    remember = BooleanField('Запомнить меня')
-    submit = SubmitField('Войти')
+    remember = BooleanField(
+        'Запомнить меня'
+    )
+    submit = SubmitField(
+        'Войти',
+        default=False
+    )
