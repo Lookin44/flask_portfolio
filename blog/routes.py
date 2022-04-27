@@ -1,9 +1,8 @@
-from flask import Flask, render_template, url_for, flash, redirect
-from form import RegistrationForm, LoginForm
+from flask import render_template, url_for, flash, redirect
 
-
-app = Flask(__name__)
-app.config.from_pyfile('settings.py')
+from blog import app
+from blog.form import RegistrationForm, LoginForm
+from blog.models import User, Post
 
 
 blogs = [
