@@ -103,7 +103,7 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-blog/.env
+.env
 .venv
 env/
 venv/
@@ -129,4 +129,4 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-/blog/site.db
+/portfolio.db
