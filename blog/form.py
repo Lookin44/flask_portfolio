@@ -5,7 +5,15 @@ from wtforms import (
     SubmitField,
     BooleanField
 )
-from wtforms.validators import DataRequired, Length, Email, EqualTo
+from wtforms.validators import (
+    DataRequired,
+    Length,
+    Email,
+    EqualTo,
+    ValidationError
+)
+
+from blog.models import User
 
 
 class RegistrationForm(FlaskForm):
@@ -48,6 +56,11 @@ class RegistrationForm(FlaskForm):
         ]
     )
     submit = SubmitField('Регистрация')
+
+    def validate_user_email(self, email):
+        user_email = User.query.filter_by(user_email=email.data).first()
+        if user_email:
+            raise ValidationError('Этот адрес уже зарегистрирован')
 
 
 class LoginForm(FlaskForm):

@@ -1,20 +1,25 @@
 from datetime import datetime
-from blog import db
+from flask_login import UserMixin
+
+from blog import db, login_manager
 
 
-class User(db.Model):
+@login_manager.user_loader
+def load_user(id_user):
+    return User.query.get(int(id_user))
+
+
+class User(db.Model, UserMixin):
     id = db.Column(
         db.Integer,
         primary_key=True
     )
     name = db.Column(
         db.String(20),
-        unique=True,
         nullable=False
     )
     last_name = db.Column(
         db.String(20),
-        unique=True,
         nullable=False
     )
     user_email = db.Column(
