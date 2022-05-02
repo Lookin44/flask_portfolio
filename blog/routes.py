@@ -5,7 +5,6 @@ from blog import app, db, bcrypt
 from blog.form import RegistrationForm, LoginForm
 from blog.models import User, Post
 
-
 blogs = [
     {
         'author': 'Egor Lukin',
@@ -119,4 +118,12 @@ def logout():
 @app.route('/account')
 @login_required
 def account():
-    return render_template('account.html', title='Профиль')
+    image_file = url_for(
+        'static',
+        filename='profile_pict/' + current_user.image_file
+    )
+    return render_template(
+        'account.html',
+        title='Профиль',
+        image_file=image_file
+    )
