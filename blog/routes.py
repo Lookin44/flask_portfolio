@@ -115,15 +115,18 @@ def logout():
     return redirect(url_for('login'))
 
 
-@app.route('/account')
+@app.route('/account', methods=['GET', 'POST'])
 @login_required
 def account():
-    image_file = url_for(
-        'static',
-        filename='profile_pict/' + current_user.image_file
-    )
-    return render_template(
-        'account.html',
-        title='Профиль',
-        image_file=image_file
-    )
+    if request.method == 'GET':
+        image_file = url_for(
+            'static',
+            filename='profile_pict/' + current_user.image_file
+        )
+        return render_template(
+            'account.html',
+            title='Профиль',
+            image_file=image_file
+        )
+    elif request.method == 'POST':
+        pass
