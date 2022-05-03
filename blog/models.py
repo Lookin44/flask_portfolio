@@ -32,6 +32,11 @@ class User(db.Model, UserMixin):
         nullable=False,
         default='default_user.jpg'
     )
+    about = db.Column(
+        db.Text(),
+        nullable=True,
+        default='Информация о себе'
+    )
     password = db.Column(
         db.String(60),
         nullable=False
