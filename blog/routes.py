@@ -2,7 +2,7 @@ from flask import render_template, url_for, flash, redirect, request
 from flask_login import login_user, current_user, logout_user, login_required
 
 from blog import app, db, bcrypt
-from blog.form import RegistrationForm, LoginForm
+from blog.form import RegistrationForm, LoginForm, ProfileEditForm
 from blog.models import User, Post
 
 blogs = [
@@ -126,4 +126,31 @@ def account():
         'account.html',
         title='Профиль',
         image_file=image_file
+    )
+
+
+@app.route('/account_edit', methods=('GET', 'POST'))
+@login_required
+def account_edit():
+    if current_user.is_anonymous:
+        flash('Вы не авторизированны', 'warning')
+        return redirect(url_for('login'))
+    form = ProfileEditForm()
+    if form.validate_on_submit():
+        current_user.name = form.name.data
+        current_user.last_name = form.last_name.data
+        current_user.user_email = form.user_email.data
+        current_user.about = form.about.data
+        db.session.commit()
+        flash('Вы обновили свой аккаунт', 'success')
+        return redirect(url_for('account'))
+    elif request.method == 'GET':
+        form.name.data = current_user.name
+        form.last_name.data = current_user.last_name
+        form.user_email.data = current_user.user_email
+        form.about.data = current_user.about
+    return render_template(
+        'account_edit.html',
+        title='Редактирование профиля',
+        form=form
     )

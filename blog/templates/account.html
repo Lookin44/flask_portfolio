@@ -7,9 +7,15 @@
         <img src="{{ image_file }}" class="rounded-circle" style="width: 150px; height: 150px;" alt="фото">
       </div>
       <div class="col">
-        <h2 class="account-heading">{{ current_user.name }} {{ current_user.last_name }}</h2>
-        <a class="">End aligned text on all viewport sizes.</a>
-        <p class="text-secondary">{{ current_user.user_email }}</p>
+        <div class="row">
+          <div class="col">
+            <h2 class="account-heading">{{ current_user.name }} {{ current_user.last_name }}</h2>
+            <p class="text-secondary">{{ current_user.user_email }}</p>
+          </div>
+          <div class="col">
+            <a href="{{ url_for('account_edit') }}" class="link-secondary">Редактировать</a>
+          </div>
+        </div>
         <div class="border border-secondary rounded-3 p-3 pt-1 pb-1">
           <small class="text-muted">О себе</small><hr>
           <p class="text-secondary">{{ current_user.about }}</p>
