@@ -118,6 +118,16 @@ class ProfileEditForm(FlaskForm):
     about = TextAreaField(
         'О себе'
     )
+    picture = FileField(
+        'Загрузить изображение',
+        validators=[
+            FileAllowed(
+                ['jpeg', 'png', 'jpg'],
+                message='Этот формат не поддерживается, '
+                        'доступные форматы: png, jpg, jpeg'
+            )
+        ]
+    )
     submit = SubmitField('Сохранить')
 
     def validate_user_email(self, email):

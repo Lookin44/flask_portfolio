@@ -130,3 +130,4 @@ dmypy.json
 .pyre/
 
 /portfolio.db
+/blog/static/profile_pict/

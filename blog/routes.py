@@ -4,6 +4,7 @@ from flask_login import login_user, current_user, logout_user, login_required
 from blog import app, db, bcrypt
 from blog.form import RegistrationForm, LoginForm, ProfileEditForm
 from blog.models import User, Post
+from blog.utilites import save_picture
 
 blogs = [
     {
@@ -137,6 +138,9 @@ def account_edit():
         return redirect(url_for('login'))
     form = ProfileEditForm()
     if form.validate_on_submit():
+        if form.picture.data:
+            picture_file = save_picture(form.picture.data)
+            current_user.image_file = picture_file
         current_user.name = form.name.data
         current_user.last_name = form.last_name.data
         current_user.user_email = form.user_email.data

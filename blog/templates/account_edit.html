@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
   <div class="border border-warning shadow rounded-3 m-4 p-4">
-    <form method="post" action="">
+    <form method="post" action="" enctype="multipart/form-data">
       {{form.hidden_tag()}}
       <fieldset class="form-group">
         <legend class="mb-4">Редактирование профиля</legend>
@@ -65,6 +65,14 @@
             {% else %}
               {{ form.about(class="form-control", placeholder="О себе", rows="3", style="height: 120px") }}
               {{ form.about.label() }}
+            {% endif %}
+          </div>
+          <div class="form-floating mb-3">
+            {{ form.picture(class="form-control-file") }}
+            {% if form.picture.errors %}
+              {% for error in form.picture.errors %}
+                <span class="alert alert-danger">{{ error }}</span>
+              {% endfor %}
             {% endif %}
           </div>
           <div class="form-floating mb-3">
