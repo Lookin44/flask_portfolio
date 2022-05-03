@@ -130,7 +130,7 @@ def account():
     )
 
 
-@app.route('/account_edit', methods=('GET', 'POST'))
+@app.route('/account/account_edit', methods=('GET', 'POST'))
 @login_required
 def account_edit():
     if current_user.is_anonymous:
