@@ -3,23 +3,23 @@
 <div class="album m-4">
   <div class="container">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-      {% for blog in blogs %}
+      {% for post in posts %}
           <div class="col">
             <div class="card shadow-sm">
               <img src="/static/img/full.jpg" class="card-img-top" alt="Фото">
                 <div class="card-body">
-                  <h5 class="card-title">{{ blog.title }}</h5>
-                  <p class="card-text">{{ blog.content }}.</p>
+                  <h5 class="card-title">{{ post.title }}</h5>
+                  <p class="card-text">{{ post.content }}.</p>
                   <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">
                       <button type="button" class="btn btn-sm btn-outline-secondary">Читать</button>
                       <button type="button" class="btn btn-sm btn-outline-secondary">Редактировать</button>
                     </div>
-                    <small class="text-muted">{{ blog.date_created }}</small>
+                    <small class="text-muted">{{ post.date_posted.strftime('%d.%m.%Y') }}</small>
                   </div>
                 </div>
                 <div class="card-footer">
-                  <a class="text-muted" href="#">{{ blog.author }}</a>
+                  <a class="text-muted" href="#">{{ post.author.name }} {{ post.author.last_name }}</a>
               </div>
             </div>
           </div>

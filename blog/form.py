@@ -95,8 +95,7 @@ class ProfileEditForm(FlaskForm):
         validators=[
             DataRequired(message='Поле не может быть пустым'),
             Length(
-                min=4,
-                max=20,
+                min=4, max=20,
                 message='Поле должно содержать от 2-ух до 20-ти символов'
             ),
         ]
@@ -135,3 +134,19 @@ class ProfileEditForm(FlaskForm):
             user_email = User.query.filter_by(user_email=email.data).first()
             if user_email:
                 raise ValidationError('Этот адрес уже зарегистрирован')
+
+
+class NewPostForm(FlaskForm):
+    title = StringField(
+        'Заголовок',
+        validators=[
+            DataRequired(message='Поле не может быть пустым')
+        ]
+    )
+    content = TextAreaField(
+        'Описание',
+        validators=[
+            DataRequired(message='Поле не может быть пустым')
+        ]
+    )
+    submit = SubmitField('Опубликовать')

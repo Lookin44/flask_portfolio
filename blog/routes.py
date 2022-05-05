@@ -2,7 +2,7 @@ from flask import render_template, url_for, flash, redirect, request
 from flask_login import login_user, current_user, logout_user, login_required
 
 from blog import app, db, bcrypt
-from blog.form import RegistrationForm, LoginForm, ProfileEditForm
+from blog.form import RegistrationForm, LoginForm, ProfileEditForm, NewPostForm
 from blog.models import User, Post
 from blog.utilites import save_picture
 
@@ -36,9 +36,10 @@ blogs = [
 
 @app.route('/')
 def index():
+    all_posts = Post.query.all()
     return render_template(
         'post_card.html',
-        blogs=blogs,
+        posts=all_posts,
         title='Главная страница',
         active='index'
     )
@@ -53,7 +54,7 @@ def about():
     )
 
 
-@app.route('/registration', methods=['GET', 'POST'])
+@app.route('/registration', methods=('GET', 'POST'))
 def registration():
     if current_user.is_authenticated:
         return redirect(url_for('index'))
@@ -157,4 +158,29 @@ def account_edit():
         'account_edit.html',
         title='Редактирование профиля',
         form=form
+    )
+
+
+@app.route('/post/new', methods=('GET', 'POST'))
+@login_required
+def post_new():
+    if current_user.is_anonymous:
+        flash('Вы не авторизированны', 'warning')
+        return redirect(url_for('login'))
+    form = NewPostForm()
+    if form.validate_on_submit():
+        post = Post(
+            title=form.title.data,
+            content=form.content.data,
+            author=current_user
+        )
+        db.session.add(post)
+        db.session.commit()
+        flash('Вы опубликовали свой пост', 'success')
+        return redirect(url_for('index'))
+    return render_template(
+        'edit_post.html',
+        title='Новый пост',
+        form=form,
+        legend='Новый пост'
     )

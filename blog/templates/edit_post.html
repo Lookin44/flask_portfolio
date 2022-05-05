@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="border border-warning shadow rounded-3 m-4 p-4">
+    <form action="" method="post">
+      {{form.hidden_tag()}}
+      <fieldset class="form-group">
+        <legend class="mb-4">{{ legend }}</legend>
+        <div class="form-floating mb-3">
+          {% if form.title.errors %}
+            {{ form.title(class="form-control is-invalid", placeholder="Почта") }}
+            {{ form.title.label() }}
+            <div class="invalid-feedback">
+              {% for error in form.title.errors %}
+                <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+          {% else %}
+            {{ form.title(class="form-control", placeholder="Почта") }}
+            {{ form.title.label() }}
+          {% endif %}
+        </div>
+        <div class="form-floating mb-3">
+          {% if form.content.errors %}
+            {{ form.content(class="form-control is-invalid", placeholder="О себе", style="height: 120px") }}
+            {{ form.content.label() }}
+            <div class="invalid-feedback">
+              {% for error in form.content.errors %}
+                <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+          {% else %}
+            {{ form.content(class="form-control", placeholder="О себе", style="height: 120px") }}
+            {{ form.content.label() }}
+          {% endif %}
+        </div>
+        <div class="form-floating mb-3">
+            {{ form.submit(class="btn btn-warning") }}
+        </div>
+      </fieldset>
+    </form>
+  </div>
+{% endblock %}
