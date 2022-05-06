@@ -61,8 +61,8 @@ class RegistrationForm(FlaskForm):
     submit = SubmitField('Регистрация')
 
     def validate_user_email(self, email):
-        user_email = User.query.filter_by(user_email=email.data).first()
-        if user_email:
+        user = User.query.filter_by(user_email=email.data).first()
+        if user:
             raise ValidationError('Этот адрес уже зарегистрирован')
 
 
@@ -131,8 +131,8 @@ class ProfileEditForm(FlaskForm):
 
     def validate_user_email(self, email):
         if email.data != current_user.user_email:
-            user_email = User.query.filter_by(user_email=email.data).first()
-            if user_email:
+            user = User.query.filter_by(user_email=email.data).first()
+            if user:
                 raise ValidationError('Этот адрес уже зарегистрирован')
 
 
@@ -149,4 +149,3 @@ class NewPostForm(FlaskForm):
             DataRequired(message='Поле не может быть пустым')
         ]
     )
-    submit = SubmitField('Опубликовать')

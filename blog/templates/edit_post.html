@@ -2,7 +2,7 @@
 {% block content %}
   <div class="border border-warning shadow rounded-3 m-4 p-4">
     <form action="" method="post">
-      {{form.hidden_tag()}}
+      {{ form.csrf_token }}
       <fieldset class="form-group">
         <legend class="mb-4">{{ legend }}</legend>
         <div class="form-floating mb-3">
@@ -34,7 +34,7 @@
           {% endif %}
         </div>
         <div class="form-floating mb-3">
-            {{ form.submit(class="btn btn-warning") }}
+            <input type="submit" value="Go">
         </div>
       </fieldset>
     </form>
