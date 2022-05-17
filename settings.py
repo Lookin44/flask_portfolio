@@ -14,3 +14,8 @@ SECRET_KEY = os.getenv('SECRET_KEY_FLASK')
 SQLALCHEMY_DATABASE_URI = f'postgresql://{DB_USER}:{DB_USER_PW}' \
                           '@localhost/db_flask_site'
 SQLALCHEMY_TRACK_MODIFICATIONS = True
+
+# Flask WTF settings
+WTF_CSRF_ENABLED = True
+WTF_CSRF_SECRET_KEY = os.getenv('WTF_CSRF_SECRET_KEY')
+

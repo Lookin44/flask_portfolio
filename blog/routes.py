@@ -4,39 +4,13 @@ from flask_login import login_user, current_user, logout_user, login_required
 from blog import app, db, bcrypt
 from blog.form import RegistrationForm, LoginForm, ProfileEditForm, NewPostForm
 from blog.models import User, Post
+from blog.services import get_all_posts
 from blog.utilites import save_picture
-
-blogs = [
-    {
-        'author': 'Egor Lukin',
-        'title': 'Первый пост',
-        'content': 'Тестовый пост',
-        'date_created': '28.03.2022'
-    },
-    {
-        'author': 'Egor Lukin',
-        'title': 'Второй пост',
-        'content': 'Тестовый пост №2',
-        'date_created': '29.03.2022'
-    },
-    {
-        'author': 'Egor Lukin',
-        'title': 'Второй пост',
-        'content': 'Тестовый пост №3',
-        'date_created': '30.03.2022'
-    },
-    {
-        'author': 'Egor Lukin',
-        'title': 'Второй пост',
-        'content': 'Тестовый пост №5',
-        'date_created': '01.04.2022'
-    },
-]
 
 
 @app.route('/')
 def index():
-    all_posts = Post.query.all()
+    all_posts = get_all_posts()
     return render_template(
         'post_card.html',
         posts=all_posts,
@@ -54,9 +28,10 @@ def about():
     )
 
 
-@app.route('/registration', methods=('GET', 'POST'))
+@app.route('/registration', methods=['GET', 'POST'])
 def registration():
     if current_user.is_authenticated:
+        flash('Вы уже авторизированны', 'info')
         return redirect(url_for('index'))
     form = RegistrationForm()
     if form.validate_on_submit():
@@ -109,9 +84,6 @@ def login():
 
 @app.route('/logout')
 def logout():
-    if current_user.is_anonymous:
-        flash('Вы не авторизированны', 'warning')
-        return redirect(url_for('login'))
     logout_user()
     flash('Вы вышли из своего аккаунта', 'info')
     return redirect(url_for('login'))
@@ -131,12 +103,9 @@ def account():
     )
 
 
-@app.route('/account/account_edit', methods=('GET', 'POST'))
+@app.route('/account/account_edit', methods=['GET', 'POST'])
 @login_required
 def account_edit():
-    if current_user.is_anonymous:
-        flash('Вы не авторизированны', 'warning')
-        return redirect(url_for('login'))
     form = ProfileEditForm()
     if form.validate_on_submit():
         if form.picture.data:
@@ -164,9 +133,6 @@ def account_edit():
 @app.route('/post/new', methods=('GET', 'POST'))
 @login_required
 def post_new():
-    if current_user.is_anonymous:
-        flash('Вы не авторизированны', 'warning')
-        return redirect(url_for('login'))
     form = NewPostForm()
     if form.validate_on_submit():
         post = Post(

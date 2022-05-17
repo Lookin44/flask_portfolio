@@ -5,7 +5,6 @@ from wtforms import (
     StringField,
     TextAreaField,
     PasswordField,
-    SubmitField,
     BooleanField
 )
 from wtforms.validators import (
@@ -58,7 +57,6 @@ class RegistrationForm(FlaskForm):
             EqualTo('password', message='Пароли не сходятся')
         ]
     )
-    submit = SubmitField('Регистрация')
 
     def validate_user_email(self, email):
         user = User.query.filter_by(user_email=email.data).first()
@@ -82,10 +80,6 @@ class LoginForm(FlaskForm):
     )
     remember = BooleanField(
         'Запомнить меня'
-    )
-    submit = SubmitField(
-        'Войти',
-        default=False
     )
 
 
@@ -127,7 +121,6 @@ class ProfileEditForm(FlaskForm):
             )
         ]
     )
-    submit = SubmitField('Сохранить')
 
     def validate_user_email(self, email):
         if email.data != current_user.user_email:

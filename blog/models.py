@@ -52,6 +52,7 @@ class User(db.Model, UserMixin):
 
 
 class Post(db.Model):
+
     id = db.Column(
         db.Integer,
         primary_key=True
